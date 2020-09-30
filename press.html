@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="Broadcasting from Stepanakert, Republic of Artsakh" name="description">
+  <title>Press | Artsakh Public Radio</title>
+  <link href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css" rel="stylesheet">
+  <link href="https://unpkg.com/purecss@2.0.3/build/buttons-core-min.css" rel="stylesheet">
+  <link href="https://unpkg.com/purecss@2.0.3/build/menus-horizontal-min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="pure-g" id="layout">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+      <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+              <a class="pure-menu-link" href="index.html">News</a>
+            </li>
+            <li class="pure-menu-item">
+              <a class="pure-menu-link" href="press.html">Press</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="logo">
+        <h1 class="brand-title">Artsakh Public Radio</h1>
+      </div>
+    </div>
+    <div class="content pure-u-1 pure-u-md-3-4">
+      <div class="posts">
+        <section class="post">
+          <header class="post-header">
+            <h2 class="post-title">The News In Artsakh Is Followed Mainly By Radio</h2>
+            <p class="post-meta">By <a class="post-author" href="https://media.am/author_posts/gayane-asryan">Gayane Asryan</a> 2020-09-29</p>
+          </header>
+          <div class="post-description">
+            <p>The news about the ongoing battles on Artsakh Public Radio is broadcast in emergency mode once every half an hour.</p>
+            <div class="pure-u-1-4"><img class="pure-img-responsive" src="images/ani-working.jpg"></div>
+            <div class="pure-u-1-4"><img class="pure-img-responsive" src="images/narek-apastaran.jpg"></div>
+            <div class="pure-u-1-4"><img class="pure-img-responsive" src="images/narek_arcakh2.jpg"></div>
+            <p>Ani Minasyan, who has recently started running the Artsakh Public Radio, says that at the moment, as they are unable to send their employees to Stepanakert, they are working with their correspondents in Hadrut and Martakert to present the situation more generally.</p>
+          </div><a class="pure-button pure-button-primary" href="https://media.am/en/newsroom/2020/09/29/24311/" target="_blank">Continue Reading</a>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script src="/__/firebase/7.21.1/firebase-app.js">
+  </script> 
+  <script src="/__/firebase/7.21.1/firebase-analytics.js">
+  </script> 
+  <script src="/__/firebase/7.21.1/firebase-auth.js">
+  </script> 
+  <script src="/__/firebase/7.21.1/firebase-storage.js">
+  </script> 
+  <script src="/__/firebase/init.js">
+  </script> 
+  <script>
+   
+   firebase.auth().signInAnonymously().catch(function(error) {
+     console.error(error)
+     var errorCode = error.code;
+     var errorMessage = error.message;  
+   });
+   
+   var storage = firebase.storage();
+   var storageRef = storage.ref();
+
+   var errorHandle = function(error){
+     switch (error.code) {
+       case 'storage/object-not-found':
+         alert('Not found');
+         break;
+
+       case 'storage/unauthorized':
+         alert('Not found');
+         break;      
+
+       case 'storage/unknown':
+         alert('Error');
+         break;
+     }
+   }
+
+   var forceDownload = function(href) {
+     var anchor = document.createElement('a');
+     anchor.href = href;
+     anchor.download = href;
+     document.body.appendChild(anchor);
+     anchor.click();
+   }  
+
+   var setImage = function(img) {
+     return storageRef.child(img.src.replace('https://artsakhradio.app/','')).getDownloadURL().then(url => {
+       img.src = url
+     })
+   }
+
+   var getImages = function() {
+     var imgs = document.getElementsByTagName("img");
+     var arr = []
+     for (var i = 0; i < imgs.length; i++) {
+       arr.push(setImage(imgs[i]))
+     }
+     return Promise.all(arr)
+   }
+
+   getImages();
+
+   var downloadFile = function(ref) {
+     storageRef.child(ref).getDownloadURL().then(function(url) {
+       forceDownload(url)
+     }).catch(function(error) {
+       console.error(error)
+       errorHandle(error)
+     });
+   }  
+  </script>
+</body>
+</html>

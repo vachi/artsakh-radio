@@ -27,7 +27,15 @@ h3 {
     padding: 0;
 }
 
-.header {
+.header{
+  text-align: center;
+  display: block;
+  width: 100%;
+  position: absolute;
+  z-index: 2;  
+}
+
+.logo {
     text-align: center;
     top: auto;
     margin: 3em auto;
@@ -154,12 +162,15 @@ h3 {
 }
 
 @media (min-width: 48em) {
+    .header{
+      background: white;
+    }
     .content {
         padding: 2em 3em 0;
         margin-left: 25%;
     }
 
-    .header {
+    .logo {
         margin: 80% 2em 0;
         text-align: right;
     }
