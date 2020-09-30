@@ -1,0 +1,142 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Broadcasting from Stepanakert, Republic of Artsakh">
+    <title>Artsakh Radio</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css" />
+
+</head>
+<body>
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+        <div class="header">
+            <h1 class="brand-title">Artsakh Radio</h1>
+        </div>
+    </div>
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            <div class="posts">
+                <h1 class="content-subhead">Pinned Post</h1>
+                <section class="post">
+                    <header class="post-header">
+                        <h2 class="post-title">News Update</h2>
+
+                        <p class="post-meta">
+                            By <a href="#" class="post-author">Ani Minasyan</a>
+                            2020-09-30
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            Latest News Broadcast on September 30th, 2020
+                        </p>    
+                        <button onclick="downloadFile('audio/2020-09-30-News.mp3')">Download</button>
+                    </div>
+                </section>
+            </div>
+            <div class="posts">
+                <section class="post">
+                    <header class="post-header">
+                        <h2 class="post-title">A View from Artsakh with David Babayan</h2>
+
+                        <p class="post-meta">
+                            By <a href="#" class="post-author">Ani Minasyan</a>
+                            2020-09-30
+                        </p>
+                    </header>
+
+                    <div class="post-description">
+                        <p>
+                            An episode of A View from Artsakh, with guest David Babayan.
+                        </p>    
+                        <button onclick="downloadFile('audio/2020-09-30-A-view-from-Artsakh.mp3')">Download</button>
+                    </div>
+                </section>
+            </div>
+            <div class="posts">
+                <section class="post">
+                    <header class="post-header">
+                        <h2 class="post-title">Political Chair</h2>
+
+                        <p class="post-meta">
+                            By <a href="#" class="post-author">Ani Minasyan</a>
+                            2020-09-20
+                        </p>
+                    </header>                        
+                    <div class="post-description">
+                        <p>
+                            An episode of Political Chair, discussing Baku elections.
+                        </p>    
+                        <button onclick="downloadFile('audio/2020-09-20-Qaxaqageti-Ambion.mp3')">Download</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/__/firebase/7.21.1/firebase-app.js"></script>
+<script src="/__/firebase/7.21.1/firebase-analytics.js"></script>
+<script src="/__/firebase/7.21.1/firebase-auth.js"></script>
+<script src="/__/firebase/7.21.1/firebase-storage.js"></script>
+<script src="/__/firebase/init.js"></script>
+
+<script>  
+  firebase.auth().signInAnonymously().catch(function(error) {
+    console.error(error)
+    var errorCode = error.code;
+    var errorMessage = error.message;  
+  });
+  
+  var storage = firebase.storage();
+  var storageRef = storage.ref();
+
+  var errorHandle = function(error){
+    switch (error.code) {
+      case 'storage/object-not-found':
+        alert('Not found');
+        break;
+
+      case 'storage/unauthorized':
+        alert('Not found');
+        break;      
+
+      case 'storage/unknown':
+        alert('Error');
+        break;
+    }
+  }
+
+  function forceDownload(href) {
+    var anchor = document.createElement('a');
+    anchor.href = href;
+    anchor.download = href;
+    document.body.appendChild(anchor);
+    anchor.click();
+  }
+
+  var downloadFile = function(ref) {
+    storageRef.child(ref).getDownloadURL().then(function(url) {
+      forceDownload(url)
+    }).catch(function(error) {
+      console.error(error)
+      errorHandle(error)
+    });
+  }  
+</script>
+
+
+</body>
+</html>
